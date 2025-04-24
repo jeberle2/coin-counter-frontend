@@ -33,9 +33,13 @@ export class AppComponent implements OnInit {
   })
 
   zaehlen() {
-    this.previousValue = this.currentValue;
-    this.currentValue = this.zaehlForm.value.betrag ?? "";
-    this.previousResult = this.currentResult
-    this.currentResult = calculate(this.currentValue)
+    if (this.zaehlForm.value.usesBackendCalculation) {
+      console.log("implementation missing")
+    } else {
+      this.previousValue = this.currentValue;
+      this.currentValue = this.zaehlForm.value.betrag ?? "";
+      this.previousResult = this.currentResult
+      this.currentResult = calculate(this.currentValue)
+    }
   }
 }

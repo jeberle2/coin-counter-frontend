@@ -18,9 +18,6 @@ export class CounterComponent implements OnChanges {
   diffResult: CounterResult[] = [];
 
   ngOnChanges() {
-    console.log(this.currentResult)
-    console.log('now previous')
-    console.log(this.previousResult)
     if (this.previousResult.length > 0) {
       this.diffResult = calculateDiff(this.currentResult, this.previousResult)
     }
