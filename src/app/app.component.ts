@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { FormControl, FormGroup, PatternValidator } from '@angular/forms';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
-import { calculate, CounterResult } from './calculator';
 import { CounterComponent } from '../counter/counter.component';
+import { calculate, CounterResult } from './calculator';
+
 
 @Component({
   selector: 'app-root',
@@ -11,13 +14,18 @@ import { CounterComponent } from '../counter/counter.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'my-app';
 
+  ngOnInit() {
+    registerLocaleData(localeDe, 'de', localeDeExtra);
+  }
+
+
   currentValue = '-';
-  currentResult: CounterResult[] = []; 
+  currentResult: CounterResult[] = [];
   previousValue = '-';
-  previousResult: CounterResult[] = []; 
+  previousResult: CounterResult[] = [];
 
   zaehlForm = new FormGroup({
     betrag: new FormControl('', [Validators.required, Validators.pattern('^-?(\\d+)(\\,\\d{1,2})?$')]),
@@ -27,6 +35,7 @@ export class AppComponent {
   zaehlen() {
     this.previousValue = this.currentValue;
     this.currentValue = this.zaehlForm.value.betrag ?? "";
+    this.previousResult = this.currentResult
     this.currentResult = calculate(this.currentValue)
   }
 }

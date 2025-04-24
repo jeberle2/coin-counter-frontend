@@ -6,18 +6,30 @@ interface CounterResult {
 const currencyTypesInCent: number[] = [20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1]
 
 function calculate(priceAsText: string): CounterResult[] {
-  const result: CounterResult[] = [];
-  let priceInCentAsNumber = Number(priceAsText.replace(',', '.')) * 100;
-  
-  currencyTypesInCent.forEach(currencyTypeCent => {
-      if(priceInCentAsNumber / currencyTypeCent >= 1) {
-          let countCurrencyType = Math.floor(priceInCentAsNumber / currencyTypeCent);
-          priceInCentAsNumber = priceInCentAsNumber - countCurrencyType * currencyTypeCent;
-          result.push({type: currencyTypeCent, value: countCurrencyType})
-      }
-  });
+    const result: CounterResult[] = [];
+    let priceInCentAsNumber = Number(priceAsText.replace(',', '.')) * 100;
 
-  return result;
+    currencyTypesInCent.forEach(currencyTypeCent => {
+        if (priceInCentAsNumber / currencyTypeCent >= 1) {
+            let countCurrencyType = Math.floor(priceInCentAsNumber / currencyTypeCent);
+            priceInCentAsNumber = priceInCentAsNumber - countCurrencyType * currencyTypeCent;
+            result.push({ type: currencyTypeCent, value: countCurrencyType })
+        }
+    });
+
+    return result;
 }
-export {calculate}
-export type {CounterResult}
+
+function calculateDiff(current: CounterResult[], previous: CounterResult[]) {
+    const diff: CounterResult[] = [];
+    currencyTypesInCent.forEach(currencyType => {
+        var currentValueOrZero = current.find(currentResult => currentResult.type == currencyType)?.value ?? 0;
+        var previousValueOrZero = previous.find(previousResult => previousResult.type == currencyType)?.value ?? 0;
+        if (!(currentValueOrZero == 0 && previousValueOrZero == 0)) {
+            diff.push({ type: currencyType, value: currentValueOrZero - previousValueOrZero })
+        }
+    })
+    return diff;
+}
+export { calculate, calculateDiff }
+export type { CounterResult }
