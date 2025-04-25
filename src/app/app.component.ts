@@ -1,13 +1,13 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { BehaviorSubject, of } from 'rxjs';
 import { CounterComponent } from '../counter/counter.component';
-import { calculate, CounterResult } from './calculator';
-import { BehaviorSubject } from 'rxjs';
-import { of } from 'rxjs';
+import { BackendCounter } from './shared/backendCounter';
+import { calculate, CounterResult, toCent } from './shared/calculator';
 
 
 @Component({
@@ -18,6 +18,8 @@ import { of } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'my-app';
+
+  backendCounter: BackendCounter = inject(BackendCounter);
 
   ngOnInit() {
     registerLocaleData(localeDe, 'de', localeDeExtra);
@@ -34,12 +36,15 @@ export class AppComponent implements OnInit {
   })
 
   zaehlen() {
+    this.previousValue = this.currentValue;
+    this.currentValue = this.zaehlForm.value.betrag ?? "";
+    
     if (this.zaehlForm.value.usesBackendCalculation) {
-      console.log("implementation missing")
+      this.backendCounter.count(toCent(this.currentValue))
+        .subscribe(result => this.currentResult.next(result));
     } else {
-      this.previousValue = this.currentValue;
-      this.currentValue = this.zaehlForm.value.betrag ?? "";
-      of(calculate(this.currentValue)).subscribe(result => this.currentResult.next(result));
+      of(calculate(toCent(this.currentValue)))
+        .subscribe(result => this.currentResult.next(result));
     }
   }
 }

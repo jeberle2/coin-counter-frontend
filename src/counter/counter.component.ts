@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { BehaviorSubject, Observable, of, pairwise, startWith } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { calculateDiff, CounterResult } from '../app/calculator';
+import { calculateDiff, CounterResult } from '../app/shared/calculator';
 
 @Component({
   selector: 'counter-result-table',

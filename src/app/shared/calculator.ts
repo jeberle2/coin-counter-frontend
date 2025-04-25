@@ -5,9 +5,12 @@ interface CounterResult {
 
 const currencyTypesInCent: number[] = [20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1]
 
-function calculate(priceAsText: string): CounterResult[] {
+function toCent(priceAsGermanString: string) {
+    return Number(priceAsGermanString.replace(',', '.')) * 100;
+}
+
+function calculate(priceInCentAsNumber: number): CounterResult[] {
     const result: CounterResult[] = [];
-    let priceInCentAsNumber = Number(priceAsText.replace(',', '.')) * 100;
 
     currencyTypesInCent.forEach(currencyTypeCent => {
         let countCurrencyType = Math.floor(priceInCentAsNumber / currencyTypeCent);
@@ -30,5 +33,5 @@ function calculateDiff(current: CounterResult[], previous: CounterResult[]) {
     })
     return diff;
 }
-export { calculate, calculateDiff };
+export { calculate, calculateDiff, toCent };
 export type { CounterResult };
