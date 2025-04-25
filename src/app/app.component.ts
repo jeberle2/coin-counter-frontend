@@ -6,6 +6,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterOutlet } from '@angular/router';
 import { CounterComponent } from '../counter/counter.component';
 import { calculate, CounterResult } from './calculator';
+import { BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -23,12 +25,11 @@ export class AppComponent implements OnInit {
 
 
   currentValue = '-';
-  currentResult: CounterResult[] = [];
+  currentResult: BehaviorSubject<CounterResult[]> = new BehaviorSubject([] as CounterResult[]);
   previousValue = '-';
-  previousResult: CounterResult[] = [];
 
   zaehlForm = new FormGroup({
-    betrag: new FormControl('', [Validators.required, Validators.pattern('^-?(\\d+)(\\,\\d{1,2})?$')]),
+    betrag: new FormControl('', [Validators.required, Validators.pattern('^(\\d+)(\\,\\d{1,2})?$')]),
     usesBackendCalculation: new FormControl(false),
   })
 
@@ -38,8 +39,7 @@ export class AppComponent implements OnInit {
     } else {
       this.previousValue = this.currentValue;
       this.currentValue = this.zaehlForm.value.betrag ?? "";
-      this.previousResult = this.currentResult
-      this.currentResult = calculate(this.currentValue)
+      of(calculate(this.currentValue)).subscribe(result => this.currentResult.next(result));
     }
   }
 }

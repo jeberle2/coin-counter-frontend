@@ -10,13 +10,12 @@ function calculate(priceAsText: string): CounterResult[] {
     let priceInCentAsNumber = Number(priceAsText.replace(',', '.')) * 100;
 
     currencyTypesInCent.forEach(currencyTypeCent => {
-        if (priceInCentAsNumber / currencyTypeCent >= 1) {
-            let countCurrencyType = Math.floor(priceInCentAsNumber / currencyTypeCent);
+        let countCurrencyType = Math.floor(priceInCentAsNumber / currencyTypeCent);
+        if (countCurrencyType > 0) {
             priceInCentAsNumber = priceInCentAsNumber - countCurrencyType * currencyTypeCent;
             result.push({ type: currencyTypeCent, value: countCurrencyType })
         }
     });
-
     return result;
 }
 
@@ -31,5 +30,5 @@ function calculateDiff(current: CounterResult[], previous: CounterResult[]) {
     })
     return diff;
 }
-export { calculate, calculateDiff }
-export type { CounterResult }
+export { calculate, calculateDiff };
+export type { CounterResult };

@@ -1,26 +1,28 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, Input, OnChanges } from '@angular/core';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { BehaviorSubject, Observable, of, pairwise, startWith } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { calculateDiff, CounterResult } from '../app/calculator';
 
 @Component({
   selector: 'counter-result-table',
-  imports: [MatTableModule, CurrencyPipe],
+  imports: [MatTableModule, CurrencyPipe, AsyncPipe],
   templateUrl: './counter.component.html',
   styleUrl: './counter.component.css'
 })
-export class CounterComponent implements OnChanges {
+export class CounterComponent implements OnInit {
   @Input()
-  currentResult: CounterResult[] = [];
-  @Input()
-  previousResult: CounterResult[] = [];
+  currentResult!: BehaviorSubject<CounterResult[]>;
 
-  diffResult: CounterResult[] = [];
+  diffResult: Observable<CounterResult[]> = of([]);
 
-  ngOnChanges() {
-    if (this.previousResult.length > 0) {
-      this.diffResult = calculateDiff(this.currentResult, this.previousResult)
-    }
+  ngOnInit() {
+    this.diffResult = this.currentResult.pipe(
+      startWith([] as CounterResult[]),
+      pairwise(),
+      map(([previous, current]) => calculateDiff(current, previous))
+    );
   }
 
   displayedColumns: string[] = ['type', 'count'];
