@@ -17,7 +17,7 @@ import { count, CounterResult, toCent } from './shared/counter';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'my-app';
+  title = 'coin-counter';
 
   backendCounter: BackendCounterGateway = inject(BackendCounterGateway);
 
