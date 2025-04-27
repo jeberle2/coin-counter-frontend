@@ -5,7 +5,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
-import { CounterComponent } from '../counter/counter.component';
+import { CounterComponent } from './counter/counter.component';
 import { BackendCounterGateway } from './shared/backend-counter-gateway';
 import { calculate, CounterResult, toCent } from './shared/calculator';
 
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   previousValue = '-';
 
   zaehlForm = new FormGroup({
-    betrag: new FormControl('', [Validators.required, Validators.pattern('^(\\d+)(\\,\\d{1,2})?$')]),
+    betrag: new FormControl('', [Validators.required, Validators.pattern('^(\\d+)(\\,\\d{1,2})?$'), Validators.maxLength(8)]),
     usesBackendCalculation: new FormControl(false),
   })
 
