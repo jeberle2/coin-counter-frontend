@@ -15,14 +15,14 @@
 <h1>Münzzähler</h1>
 <main class="main">
 
-      <form [formGroup]="zaehlForm" (ngSubmit)="zaehlen()">
+      <form [formGroup]="countForm" (ngSubmit)="countCoins()">
         <label>Betrag [EUR]
-          <input type="text" placeholder="€" formControlName="betrag"/>
+          <input type="text" placeholder="€" formControlName="amount"/>
         </label><br><br>
         <label>Berechnung im Backend
-          <input type="checkbox" formControlName="usesBackendCalculation"/>
+          <input type="checkbox" formControlName="usesBackendCounter"/>
         </label><br><br>
-        <button type="submit" [disabled]="!zaehlForm.valid">Zählen</button>
+        <button type="submit" [disabled]="!countForm.valid">Zählen</button>
       </form>
 
       <span>{{"Aktueller Betrag: " + currentValue + " €" }}</span>

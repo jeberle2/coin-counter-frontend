@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { ResultComponent } from './result/result.component';
 import { BackendCounterGateway } from './shared/backend-counter-gateway';
-import { calculate, CounterResult, toCent } from './shared/calculator';
+import { count, CounterResult, toCent } from './shared/counter';
 
 
 @Component({
@@ -30,20 +30,20 @@ export class AppComponent implements OnInit {
   currentResult: BehaviorSubject<CounterResult[]> = new BehaviorSubject([] as CounterResult[]);
   previousValue = '-';
 
-  zaehlForm = new FormGroup({
-    betrag: new FormControl('', [Validators.required, Validators.pattern('^(\\d+)(\\,\\d{1,2})?$'), Validators.maxLength(8)]),
-    usesBackendCalculation: new FormControl(false),
+  countForm = new FormGroup({
+    amount: new FormControl('', [Validators.required, Validators.pattern('^(\\d+)(\\,\\d{1,2})?$'), Validators.maxLength(8)]),
+    usesBackendCounter: new FormControl(false),
   })
 
-  zaehlen() {
+  countCoins() {
     this.previousValue = this.currentValue;
-    this.currentValue = this.zaehlForm.value.betrag ?? "";
+    this.currentValue = this.countForm.value.amount ?? "";
 
-    if (this.zaehlForm.value.usesBackendCalculation) {
+    if (this.countForm.value.usesBackendCounter) {
       this.backendCounter.count(toCent(this.currentValue))
         .subscribe(result => this.currentResult.next(result));
     } else {
-      of(calculate(toCent(this.currentValue)))
+      of(count(toCent(this.currentValue)))
         .subscribe(result => this.currentResult.next(result));
     }
   }
