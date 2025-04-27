@@ -5,14 +5,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
-import { CounterComponent } from './counter/counter.component';
+import { ResultComponent } from './result/result.component';
 import { BackendCounterGateway } from './shared/backend-counter-gateway';
 import { calculate, CounterResult, toCent } from './shared/calculator';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ReactiveFormsModule, CounterComponent],
+  imports: [RouterOutlet, ReactiveFormsModule, ResultComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

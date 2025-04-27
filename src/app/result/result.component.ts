@@ -8,10 +8,10 @@ import {calculateDiff, CounterResult, DiffResult} from '../shared/calculator';
 @Component({
   selector: 'counter-result-table',
   imports: [MatTableModule, CurrencyPipe, AsyncPipe],
-  templateUrl: './counter.component.html',
-  styleUrl: './counter.component.css'
+  templateUrl: './result.component.html',
+  styleUrl: './result.component.css'
 })
-export class CounterComponent implements OnInit {
+export class ResultComponent implements OnInit {
   @Input()
   currentResult!: BehaviorSubject<CounterResult[]>;
 
