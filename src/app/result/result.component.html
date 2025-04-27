@@ -1,49 +1,49 @@
-<div class = "result-container">
-@if (currentResult | async; as result) {
-  @if (result.length != 0) {
-    <div class = "table-container">
-      <p>Ergebnis zu aktuellem Betrag</p>
-      <table mat-table [dataSource]="result" class="result-table">
-        <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef> Schein/Münze</th>
-          <td mat-cell *matCellDef="let resultLine"> {{
-              resultLine.type / 100 |
-                currency:'EUR':'symbol':'1.2-2':'de'
-            }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="count">
-          <th mat-header-cell *matHeaderCellDef> Anzahl</th>
-          <td mat-cell *matCellDef="let resultLine"> {{ resultLine.value }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
+<div class="result-container">
+  @if (currentResult | async; as result) {
+    @if (result.length != 0) {
+      <div class="table-container">
+        <p>Ergebnis zu aktuellem Betrag</p>
+        <table mat-table [dataSource]="result" class="result-table">
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Schein/Münze</th>
+            <td mat-cell *matCellDef="let resultLine"> {{
+                resultLine.type / 100 |
+                  currency:'EUR':'symbol':'1.2-2':'de'
+              }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef> Anzahl</th>
+            <td mat-cell *matCellDef="let resultLine"> {{ resultLine.value }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    }
   }
-}
 
-@if (diffResult | async; as diff) {
-  @if (diff.length != 0) {
-    <div class = "table-container">
-      <p>Differenz zum vorherigem Betrag</p>
-      <table mat-table [dataSource]="diff">
-        <ng-container matColumnDef="type">
-          <th mat-header-cell *matHeaderCellDef> Schein/Münze</th>
-          <td mat-cell *matCellDef="let diffLine"> {{
-              diffLine.type / 100 |
-                currency:'EUR':'symbol':'1.2-2':'de'
-            }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="count">
-          <th mat-header-cell *matHeaderCellDef> Differenz</th>
-          <td mat-cell *matCellDef="let diffLine"> {{ diffLine.diff }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
+  @if (diffResult | async; as diff) {
+    @if (diff.length != 0) {
+      <div class="table-container">
+        <p>Differenz zum vorherigem Betrag</p>
+        <table mat-table [dataSource]="diff">
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Schein/Münze</th>
+            <td mat-cell *matCellDef="let diffLine"> {{
+                diffLine.type / 100 |
+                  currency:'EUR':'symbol':'1.2-2':'de'
+              }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef> Differenz</th>
+            <td mat-cell *matCellDef="let diffLine"> {{ diffLine.diff }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    }
   }
-}
 </div>
