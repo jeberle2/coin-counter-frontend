@@ -6,7 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterOutlet } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { CounterComponent } from '../counter/counter.component';
-import { BackendCounter } from './shared/backendCounter';
+import { BackendCounterGateway } from './shared/backend-counter-gateway';
 import { calculate, CounterResult, toCent } from './shared/calculator';
 
 
@@ -19,7 +19,7 @@ import { calculate, CounterResult, toCent } from './shared/calculator';
 export class AppComponent implements OnInit {
   title = 'my-app';
 
-  backendCounter: BackendCounter = inject(BackendCounter);
+  backendCounter: BackendCounterGateway = inject(BackendCounterGateway);
 
   ngOnInit() {
     registerLocaleData(localeDe, 'de', localeDeExtra);
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
   zaehlen() {
     this.previousValue = this.currentValue;
     this.currentValue = this.zaehlForm.value.betrag ?? "";
-    
+
     if (this.zaehlForm.value.usesBackendCalculation) {
       this.backendCounter.count(toCent(this.currentValue))
         .subscribe(result => this.currentResult.next(result));
