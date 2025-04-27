@@ -15,14 +15,16 @@ const formatDiff = (diffValue: number) => diffValue > 0 ? '+' + diffValue : '' +
 
 const calculateDiff = (current: CounterResult[], previous: CounterResult[]): DiffResult[] => {
   const diff: DiffResult[] = [];
-  currencyTypesInCent.forEach(currencyType => {
-    const currentValueOrZero = findValueOrZero(current, currencyType);
-    const previousValueOrZero = findValueOrZero(previous, currencyType);
-    if (!(currentValueOrZero == 0 && previousValueOrZero == 0)) {
-      let diffValue = currentValueOrZero - previousValueOrZero;
-      diff.push(new DiffResult(currencyType, formatDiff(diffValue)))
-    }
-  })
+  if (previous.length != 0 && current.length != 0) {
+    currencyTypesInCent.forEach(currencyType => {
+      const currentValueOrZero = findValueOrZero(current, currencyType);
+      const previousValueOrZero = findValueOrZero(previous, currencyType);
+      if (!(currentValueOrZero == 0 && previousValueOrZero == 0)) {
+        let diffValue = currentValueOrZero - previousValueOrZero;
+        diff.push(new DiffResult(currencyType, formatDiff(diffValue)))
+      }
+    })
+  }
   return diff;
 };
 
