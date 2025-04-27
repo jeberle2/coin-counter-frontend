@@ -1,18 +1,17 @@
-import { registerLocaleData } from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { BehaviorSubject, of } from 'rxjs';
-import { ResultComponent } from './result/result.component';
-import { BackendCounterGateway } from './shared/backend-counter-gateway';
-import { count, CounterResult, toCent } from './shared/counter';
+import {Component, inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {BehaviorSubject, of} from 'rxjs';
+import {ResultComponent} from './result/result.component';
+import {BackendCounterGateway} from './shared/backend-counter-gateway';
+import {count, CounterResult, toCent} from './shared/counter';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ReactiveFormsModule, ResultComponent],
+  imports: [ReactiveFormsModule, ResultComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
